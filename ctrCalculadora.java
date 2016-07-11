@@ -34,105 +34,27 @@ public class ctrCalculadora implements ActionListener{
 				vista.getPantalla().setText("0");
 			break;
 			case "SUMAR":
-				if(sumar||restar||multiplicar||dividir){
-					sumar = false;
-					restar = false;
-					multiplicar = false;
-					dividir = false;
-				}else{
-					if(igual){
-						op1=resultado;
-						igual=false;
-					}else{
-						op1=vista.obtenerOperando();
-					}
-				}
+				comprobacionAnterior();
 				sumar=true;
 				vista.getPantalla().setText("0");
 			break;
 			case "RESTAR":
-				if(sumar||restar||multiplicar||dividir){
-					sumar = false;
-					restar = false;
-					multiplicar = false;
-					dividir = false;
-				}else{
-					if(igual){
-						op1=resultado;
-						igual=false;
-					}else{
-						op1=vista.obtenerOperando();
-					}
-				}
+				comprobacionAnterior();
 				restar=true;
 				vista.getPantalla().setText("0");
 			break;
 			case "MULTIPLICAR":
-				if(sumar||restar||multiplicar||dividir){
-					sumar = false;
-					restar = false;
-					multiplicar = false;
-					dividir = false;
-				}else{
-					if(igual){
-						op1=resultado;
-						igual=false;
-					}else{
-						op1=vista.obtenerOperando();
-					}
-				}
+				comprobacionAnterior();
 				multiplicar=true;
 				vista.getPantalla().setText("0");
 			break;
 			case "DIVIDIR":
-				if(sumar||restar||multiplicar||dividir){
-					sumar = false;
-					restar = false;
-					multiplicar = false;
-					dividir = false;
-				}else{
-					if(igual){
-						op1=resultado;
-						igual=false;
-					}else{
-						op1=vista.obtenerOperando();
-					}
-				}
+				comprobacionAnterior();
 				dividir=true;
 				vista.getPantalla().setText("0");
 			break;
 			case "IGUAL":
-				if(igual){
-					igual=false;
-				}else{
-					op2 = vista.obtenerOperando();
-				}
-				System.out.println("OP1: "+op1+", OP2: "+op2);
-				resultado=0;
-				if(sumar){
-					resultado=calc.suma(op1, op2);
-					System.out.println("Resultado: "+resultado);
-				}else if(restar){
-					resultado=calc.resta(op1, op2);
-					System.out.println("Resultado: "+resultado);
-				}else if(multiplicar){
-					resultado=calc.producto(op1,op2);
-					System.out.println("Resultado: "+resultado);
-				}else if(dividir){
-					resultado=calc.division(op1, op2);
-					System.out.println("Resultado: "+resultado);
-				}else{
-					resultado=Double.parseDouble(vista.getPantalla().getText());
-					System.out.println("Resultado: "+resultado);
-				}
-				vista.getPantalla().setText(Double.toString(resultado));
-				op1 = 0;
-				op2 = 0;
-				sumar = false;
-				restar = false;
-				multiplicar = false;
-				dividir = false;
-				igual=true;
+				operar();
 			break;
 			default:
 				if(igual){
@@ -143,5 +65,53 @@ public class ctrCalculadora implements ActionListener{
 				vista.getPantalla().setText(Integer.toString(i + 10 * Integer.parseInt(vista.getPantalla().getText().equals("") ? "0" : vista.getPantalla().getText())));
 			break;
 		}
+	}
+	public void limpiarOperacion(){
+		sumar = false;
+		restar = false;
+		multiplicar = false;
+		dividir = false;
+	}
+	public void comprobacionAnterior(){
+		if(sumar||restar||multiplicar||dividir){
+			limpiarOperacion();
+		}else{
+			if(igual){
+				op1=resultado;
+				igual=false;
+			}else{
+				op1=vista.obtenerOperando();
+			}
+		}
+	}
+	public void operar(){
+		if(igual){
+			igual=false;
+		}else{
+			op2 = vista.obtenerOperando();
+		}
+		System.out.println("OP1: "+op1+", OP2: "+op2);
+		resultado=0;
+		if(sumar){
+			resultado=calc.suma(op1, op2);
+			System.out.println("Resultado: "+resultado);
+		}else if(restar){
+			resultado=calc.resta(op1, op2);
+			System.out.println("Resultado: "+resultado);
+		}else if(multiplicar){
+			resultado=calc.producto(op1,op2);
+			System.out.println("Resultado: "+resultado);
+		}else if(dividir){
+			resultado=calc.division(op1, op2);
+			System.out.println("Resultado: "+resultado);
+		}else{
+			resultado=Double.parseDouble(vista.getPantalla().getText());
+			System.out.println("Resultado: "+resultado);
+		}
+		vista.getPantalla().setText(Double.toString(resultado));
+		op1 = 0;
+		op2 = 0;
+		limpiarOperacion();
+		igual=true;
 	}
 }
